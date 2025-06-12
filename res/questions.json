@@ -1,0 +1,73 @@
+[
+  {
+    "id": 1,
+    "question": "What is your current employment status?",
+    "options": ["Employed full-time", "Employed part-time", "Unemployed", "Self-employed", "Student", "Retired"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 2,
+    "question": "Do you have any dependents?",
+    "options": ["Yes", "No"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 3,
+    "question": "What is your approximate annual household income?",
+    "options": ["Less than $20,000", "$20,000 - $40,000", "$40,001 - $60,000", "$60,001 - $80,000", "Over $80,000"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 4,
+    "question": "Do you currently have health insurance?",
+    "options": ["Yes", "No", "Only through a government program (e.g., Medicaid, Medicare)"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 5,
+    "question": "What is your age group?",
+    "options": ["Under 18", "18-24", "25-34", "35-44", "45-64", "65+"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 6,
+    "question": "Do you or a household member have a disability?",
+    "options": ["Yes", "No"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 7,
+    "question": "Are you currently receiving any government assistance programs?",
+    "options": ["SNAP (Food Stamps)", "TANF", "Medicaid", "Housing Assistance", "Unemployment Benefits", "None of the above"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 8,
+    "question": "What is your current living situation?",
+    "options": ["Renting", "Own home", "Living with family/friends", "Homeless or in temporary shelter"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 9,
+    "question": "Are you currently pregnant or a parent of a child under 5?",
+    "options": ["Yes", "No"],
+    "type": "multiple-choice"
+  },
+  {
+    "id": 10,
+    "question": "Which state do you reside in?",
+    "options": [
+      "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+      "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
+      "Illinois", "Indiana", " Iowa", "Kansas", "Kentucky", "Louisiana",
+      "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
+      "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
+      "New Hampshire", "New Jersey", "New Mexico", "New York",
+      "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon",
+      "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+      "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+      "West Virginia", "Wisconsin", "Wyoming"
+    ],
+    "type": "dropdown"
+  }
+]
