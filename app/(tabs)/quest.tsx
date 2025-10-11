@@ -1,63 +1,56 @@
-import { Text, View, ScrollView, Pressable, Platform, Animated } from 'react-native'
-import React, { useState, useRef, useEffect } from 'react'
-import { Picker } from '@react-native-picker/picker'
-import questions from '../../res/questions.json'
 import { Feather } from '@expo/vector-icons'
+import { Picker } from '@react-native-picker/picker'
+import React, { useState } from 'react'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import questions from '../../res/questions.json'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface QuestionProps {
-  id: number;
-  question: string;
-  options: string[];
-  type: 'multiple-choice' | 'dropdown';
+  id: number
+  question: string
+  options: string[]
+  type: 'multiple-choice' | 'dropdown'
 }
 
 const Quest = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
-  const [isCompleted, setIsCompleted] = useState(false);
-  const animatedValue = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    return () => {
-      animatedValue.setValue(0);
-    };
-  }, []);
-
-  const animateButton = (toValue: number) => {
-    Animated.timing(animatedValue, {
-      toValue,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const backgroundColor = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['#4E4FEB', '#3a3bb8']
-  });
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({})
+  const [isCompleted, setIsCompleted] = useState(false)
 
   //@ts-ignore
-  const currentQuestion: QuestionProps = questions[currentQuestionIndex];
+  const currentQuestion: QuestionProps = questions[currentQuestionIndex]
 
-  
   const handleOptionSelect = (option: string) => {
     setSelectedAnswers({
       ...selectedAnswers,
       [currentQuestion.id]: option
-    });
-  };
+    })
+  }
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
-  };
+  }
 
   const handleBack = () => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      setCurrentQuestionIndex(currentQuestionIndex - 1)
     }
-  };
+  }
+
+  const isLastQuestion = currentQuestionIndex === questions.length - 1
+
+  const handleRestart = () => {
+    setCurrentQuestionIndex(0)
+    setSelectedAnswers({})
+    setIsCompleted(false)
+  }
+
+  const handleSubmit = () => {
+    setIsCompleted(true)
+    return selectedAnswers
+  }
 
   const renderQuestion = () => {
     if (currentQuestion.type === 'dropdown') {
@@ -68,21 +61,23 @@ const Quest = () => {
             onValueChange={handleOptionSelect}
             style={{ color: '#ffffff' }}
           >
-            <Picker.Item label="Select a state..." value="" />
+            <Picker.Item 
+            label="Select a state..." value="" />
             {currentQuestion.options.map((option, index) => (
               <Picker.Item key={index} label={option} value={option} />
             ))}
           </Picker>
         </View>
-      );
+      )
     }
 
     return (
       <View className="space-y-4 mb-6">
         {currentQuestion.options.map((option, index) => (
-          <Pressable
+          <TouchableOpacity
             key={index}
             onPress={() => handleOptionSelect(option)}
+            activeOpacity={0.9}
             className={`p-4 rounded-lg mt-3 ${
               selectedAnswers[currentQuestion.id] === option 
                 ? 'bg-col2' 
@@ -96,23 +91,11 @@ const Quest = () => {
             }`}>
               {option}
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         ))}
       </View>
-    );
-  };
-
-  const isLastQuestion = currentQuestionIndex === questions.length - 1;
-  const handleRestart = () => {
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers({});
-    setIsCompleted(false);
-  };
-
-  const handleSubmit = () => {
-    setIsCompleted(true);
-    return selectedAnswers;
-  };
+    )
+  }
 
   if (isCompleted) {
     return (
@@ -125,23 +108,18 @@ const Quest = () => {
           <Text className="text-col2 text-lg mb-8 text-center">
             Thank you for completing all the questions.
           </Text>
-          <Pressable
+          <TouchableOpacity
             onPress={handleRestart}
-            onPressIn={() => animateButton(1)}
-            onPressOut={() => animateButton(0)}
+            activeOpacity={0.7}
+            className="px-8 py-4 rounded-lg bg-[#4E4FEB]"
           >
-            <Animated.View 
-              style={{ backgroundColor }}
-              className="px-8 py-4 rounded-lg"
-            >
-              <Text className="text-white text-lg font-semibold">
-                Start Over
-              </Text>
-            </Animated.View>
-          </Pressable>
+            <Text className="text-white text-lg font-semibold">
+              Start Over
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
-    );
+    )
   }
 
   return (
@@ -160,52 +138,43 @@ const Quest = () => {
       </ScrollView>
 
       <View className="absolute bottom-8 right-6 flex-row space-x-4">
-        <Pressable
+        <TouchableOpacity
           onPress={handleBack}
           disabled={currentQuestionIndex === 0}
+          activeOpacity={currentQuestionIndex === 0 ? 1 : 0.8}
           className={`px-6 py-3 rounded-lg mx-2 ${
             currentQuestionIndex === 0 ? 'opacity-50' : ''
           } bg-dg`}
         >
           <Text className="text-col1 text-lg font-semibold">Back</Text>
-        </Pressable>
+        </TouchableOpacity>
 
         {!isLastQuestion ? (
-          <Pressable
+          <TouchableOpacity
             onPress={handleNext}
-            onPressIn={() => animateButton(1)}
-            onPressOut={() => animateButton(0)}
             disabled={!selectedAnswers[currentQuestion.id]}
+            activeOpacity={!selectedAnswers[currentQuestion.id] ? 1 : 0.8}
+            className={`px-6 py-3 rounded-lg bg-[#4E4FEB] ${
+              !selectedAnswers[currentQuestion.id] ? 'opacity-50' : ''
+            }`}
           >
-            <Animated.View 
-              style={{ backgroundColor }}
-              className={`px-6 py-3 rounded-lg ${
-                !selectedAnswers[currentQuestion.id] ? 'opacity-50' : ''
-              }`}
-            >
-              <Text className="text-white text-lg font-semibold">Next</Text>
-            </Animated.View>
-          </Pressable>
+            <Text className="text-white text-lg font-semibold">Next</Text>
+          </TouchableOpacity>
         ) : (
-          <Pressable
+          <TouchableOpacity
             onPress={handleSubmit}
-            onPressIn={() => animateButton(1)}
-            onPressOut={() => animateButton(0)}
             disabled={!selectedAnswers[currentQuestion.id]}
+            activeOpacity={!selectedAnswers[currentQuestion.id] ? 1 : 0.8}
+            className={`px-6 py-3 rounded-lg bg-[#4E4FEB] ${
+              !selectedAnswers[currentQuestion.id] ? 'opacity-50' : ''
+            }`}
           >
-            <Animated.View 
-              style={{ backgroundColor }}
-              className={`px-6 py-3 rounded-lg ${
-                !selectedAnswers[currentQuestion.id] ? 'opacity-50' : ''
-              }`}
-            >
-              <Text className="text-white text-lg font-semibold">Submit</Text>
-            </Animated.View>
-          </Pressable>
+            <Text className="text-white text-lg font-semibold">Submit</Text>
+          </TouchableOpacity>
         )}
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default Quest;
+export default Quest

@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'
+import React from 'react'
+import { TextInput, View } from 'react-native'
 
 interface SearchBarProps {
-  value: string;
-  onChangeText: (text: string) => void;
-  onFocusChange: (focused: boolean) => void;
+  value: string
+  onChangeText: (text: string) => void
+  onFocusChange: (focused: boolean) => void
 }
 
 const SearchBar = ({ value, onChangeText, onFocusChange }: SearchBarProps) => {
@@ -23,7 +23,7 @@ const SearchBar = ({ value, onChangeText, onFocusChange }: SearchBarProps) => {
         onBlur={() => onFocusChange(false)}
       />
     </View>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar
