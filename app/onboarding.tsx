@@ -8,7 +8,7 @@ const { width } = Dimensions.get('window')
 const slides = [
   {
     key: '1',
-    title: 'Welcome to BenePro',
+    title: 'Welcome to KanDo',
     subtitle: 'Unlock the benefits you deserve — quick, simple, personalized.',
   },
   {

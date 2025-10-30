@@ -10,7 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "backgroundColor": "#000000"
+      "backgroundColor": "#000000",
+      "bundleIdentifier": "com.mbhadriraju.congressappchallenge",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -41,6 +45,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c9693f9c-7f01-42e5-b263-45fa6a9b3cc5"
+      }
+    },
+    "owner": "mbhadriraju"
   }
 }

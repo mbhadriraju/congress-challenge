@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const { authenticateToken } = require('../src/middleware/auth')
 const { computeBenefits } = require('../src/services/benefits')
 const appGuidance = require('../src/services/appGuidance')
-const { generateChat } = require('../src/services/gemini')
+const { generateChat, buildSystemPrompt } = require('../src/services/gemini')
 
 const QuestAnswer = mongoose.models.questanswers || mongoose.model('questanswers', new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'users' },
@@ -45,21 +45,24 @@ router.post('/chat', authenticateToken, async (req, res) => {
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ status: 'error', message: 'Message is required' })
     }
+    const systemPrompt = buildSystemPrompt()
     const qa = await QuestAnswer.findOne({ userId: req.user.id })
     const answers = qa?.answers || {}
     const benefits = computeBenefits(answers)
     const appContext = { answers, benefits, appGuidance }
 
     const recent = await ChatMessage.find({ userId: req.user.id }).sort({ at: 1 }).limit(50)
-    const messages = recent.map(m => ({ role: m.role, content: m.content }))
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...recent.map(m => ({ role: m.role, content: m.content }))
+    ]
     messages.push({ role: 'user', content: message })
-
     const result = await generateChat({ messages, context: appContext })
 
     await ChatMessage.create({ userId: req.user.id, role: 'user', content: message })
-    await ChatMessage.create({ userId: req.user.id, role: 'assistant', content: result.text })
+    await ChatMessage.create({ userId: req.user.id, role: 'assistant', content: result })
 
-    return res.json({ status: 'success', message: result.text })
+    return res.json({ status: 'success', message: result })
   } catch (e) {
     return res.status(500).json({ status: 'error', message: e })
   }
