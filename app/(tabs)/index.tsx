@@ -4,15 +4,14 @@ import { Link, Redirect } from "expo-router"
 import { useEffect, useState } from "react"
 import {
   FlatList,
+  Linking,
   Modal,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
-  Linking
+  View
 } from "react-native"
-import { useAuth } from "../context/AuthProvider"
 import questions from '../../res/questions.json'
+import { useAuth } from "../context/AuthProvider"
 
 
 type Benefit = {
@@ -45,7 +44,7 @@ export default function Index() {
   
   const fetchData = async (all: boolean) => {
     const token = await AsyncStorage.getItem('token')
-    const url = `http://localhost:5000/index/api${all ? '?all=true' : ''}`
+    const url = `http://kando.govt.hu:5000/index/api${all ? '?all=true' : ''}`
     const sendResponse = await fetch(url, {
       method: 'GET',
       headers: {
@@ -97,7 +96,7 @@ export default function Index() {
     try {
       const token = await AsyncStorage.getItem('token')
       if (!token) { setNumCompletedSections(0); return }
-      const resp = await fetch('http://localhost:5000/quest', {
+      const resp = await fetch('http://kando.govt.hu:5000/quest', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -151,19 +150,21 @@ export default function Index() {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        className="rounded-lg p-4 mb-4 flex-row items-center bg-[#181C14]"
+        className="rounded-2xl p-4 mb-3 flex-row items-center bg-surface border border-surfaceElevated"
         onPress={() => onSelectBenefit(item)}
       >
         <View className="flex-1 mr-4">
-          <Text className="text-col1 text-lg font-bold">{item.name}</Text>
+          <Text className="text-text text-lg font-bold mb-1">{item.name}</Text>
           {!!item.reason && !isSearchFocused && (
-            <Text className="text-col2 text-base flex-shrink">{item.reason}</Text>
+            <Text className="text-textSecondary text-sm flex-shrink leading-5">{item.reason}</Text>
           )}
         </View>
         {isSearchFocused && (
-          <Text className={`text-sm font-semibold ${item.qualify ? 'text-green-400' : 'text-red-400'}`}>
-            {item.qualify ? 'Qualify' : 'Do not qualify'}
-          </Text>
+          <View className={`px-3 py-1.5 rounded-full ${item.qualify ? 'bg-success/20' : 'bg-error/20'}`}>
+            <Text className={`text-xs font-semibold ${item.qualify ? 'text-success' : 'text-error'}`}>
+              {item.qualify ? 'Qualify' : 'Do not qualify'}
+            </Text>
+          </View>
         )}
       </TouchableOpacity>
     )
@@ -175,14 +176,14 @@ export default function Index() {
   return (
     <>
       <FlatList
-        className="flex-1 bg-col4 px-5 pt-16"
+        className="flex-1 bg-bg px-5 pt-16"
         data={filteredData}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <Data item={item} />}
         keyboardShouldPersistTaps="always"
         ListHeaderComponent={
           <>
-            <View className="flex-row items-center">
+            <View className="flex-row items-center mb-4">
               <View className="flex-1">
                 <SearchBar
                   value={searchQuery}
@@ -194,28 +195,27 @@ export default function Index() {
                 <TouchableOpacity
                   onPress={exitSearch}
                   activeOpacity={0.7}
-                  className="ml-3 px-3 py-2 rounded-lg bg-dg"
+                  className="ml-3 px-4 py-3 rounded-xl bg-surface border border-surfaceElevated"
                 >
-                  <Text className="text-col1 font-semibold">Cancel</Text>
+                  <Text className="text-text font-semibold">Cancel</Text>
                 </TouchableOpacity>
               )}
             </View>
             {!isSearchFocused && (
-              <View className="mt-4">
-                <Text className="text-col2 py-10 text-5xl font-bold text-center">
-                  Welcome{" " + userInfo.userInfo.firstName}!
+              <View className="mt-6 mb-8">
+                <Text className="text-text py-6 text-4xl font-bold text-center leading-tight">
+                  Welcome, {userInfo.userInfo.firstName}!
                 </Text>
-                <Text className="text-col1 text-xl font-bold text-center px-8">
-                  This application allows users to identify the benefits they
-                  qualify for by answering a quick series of questions
+                <Text className="text-textSecondary text-lg text-center px-4 leading-6">
+                  Discover benefits tailored to your situation. Answer a few questions to see what you qualify for.
                 </Text>
                 {numCompletedSections === 0 && (
                   <Link href="/quest" asChild>
                     <TouchableOpacity
-                      className="mt-10 items-center bg-[#4E4FEB] rounded-lg mx-20"
+                      className="mt-8 items-center bg-primary rounded-2xl mx-6 shadow-lg"
                       activeOpacity={0.8}
                     >
-                      <Text className="text-white text-2xl font-bold px-6 py-3">
+                      <Text className="text-white text-lg font-bold px-6 py-4">
                         Start Questionnaire
                       </Text>
                     </TouchableOpacity>
@@ -224,24 +224,24 @@ export default function Index() {
                 {numCompletedSections > 0 && numCompletedSections < TOTAL_SECTIONS && (
                   <Link href="/quest" asChild>
                     <TouchableOpacity
-                      className="mt-4 items-center bg-[#4E4FEB] rounded-lg mx-20"
+                      className="mt-6 items-center bg-primary rounded-2xl mx-6 shadow-lg"
                       activeOpacity={0.8}
                     >
-                      <Text className="text-white text-2xl font-bold px-6 py-3">
-                        Continue Questionnaire ({TOTAL_SECTIONS - numCompletedSections} sections remaining)
+                      <Text className="text-white text-lg font-bold px-6 py-4">
+                        Continue Questionnaire ({TOTAL_SECTIONS - numCompletedSections} remaining)
                       </Text>
                     </TouchableOpacity>
                   </Link>
                 )}
               </View>
             )}
-            <Text className="text-col1 mt-10 mb-6 text-5xl font-bold">
+            <Text className="text-text mt-8 mb-4 text-3xl font-bold">
               Benefits
             </Text>
           </>
         }
         ListEmptyComponent={
-          <Text className="text-col1 text-center mt-4">
+          <Text className="text-textSecondary text-center mt-8 text-lg">
             No benefits found matching your search
           </Text>
         }
@@ -256,39 +256,42 @@ export default function Index() {
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => setModalVisible(false)}
-          className="flex-1 bg-black/50 justify-end"
+          className="flex-1 bg-black/70 justify-end"
         >
           <TouchableOpacity
             activeOpacity={1}
-            className="bg-[#181C14] rounded-t-2xl p-6"
+            className="bg-surface rounded-t-3xl p-6 border-t border-surfaceElevated max-h-[90%]"
             onPress={() => {}}
           >
-            <Text className="text-col1 text-2xl font-bold mb-2">{selectedBenefit?.name}</Text>
+            <View className="w-12 h-1 bg-textTertiary rounded-full self-center mb-4" />
+            <Text className="text-text text-2xl font-bold mb-3">{selectedBenefit?.name}</Text>
             {selectedBenefit?.qualify !== undefined && (
-              <Text className={`mb-3 font-semibold ${selectedBenefit?.qualify ? 'text-green-400' : 'text-red-400'}`}>
-                {selectedBenefit?.qualify ? 'You likely qualify' : 'You likely do not qualify'}
-              </Text>
+              <View className={`mb-4 px-3 py-2 rounded-xl ${selectedBenefit?.qualify ? 'bg-success/20' : 'bg-error/20'}`}>
+                <Text className={`font-semibold ${selectedBenefit?.qualify ? 'text-success' : 'text-error'}`}>
+                  {selectedBenefit?.qualify ? '✓ You likely qualify' : '✗ You likely do not qualify'}
+                </Text>
+              </View>
             )}
             {!!selectedBenefit?.reason && (
-              <Text className="text-col2 mb-3">Reason: {selectedBenefit?.reason}</Text>
+              <Text className="text-secondary mb-4 text-base leading-6">Reason: {selectedBenefit?.reason}</Text>
             )}
-            <Text className="text-col1">
+            <Text className="text-textSecondary mb-6 leading-6">
               {selectedBenefit?.description || 'No description available.'}
             </Text>
-            <View className="flex-row mt-6 justify-end">
+            <View className="flex-row mt-6 justify-end gap-3">
               {url && (
                 <TouchableOpacity
                   onPress={async () => { try { await Linking.openURL(url) } catch {} }}
                   activeOpacity={0.8}
-                  className="mr-3 px-4 py-2 rounded-lg bg-dg"
+                  className="px-5 py-3 rounded-xl bg-secondary"
                 >
-                  <Text className="text-col1 font-semibold">Open Link</Text>
+                  <Text className="text-white font-semibold">Open Link</Text>
                 </TouchableOpacity>
               )}
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
                 activeOpacity={0.8}
-                className="px-4 py-2 rounded-lg bg-[#4E4FEB]"
+                className="px-5 py-3 rounded-xl bg-primary"
               >
                 <Text className="text-white font-semibold">Close</Text>
               </TouchableOpacity>

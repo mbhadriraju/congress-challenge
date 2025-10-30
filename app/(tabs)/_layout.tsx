@@ -8,11 +8,15 @@ const _layout = () => {
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: '#000000',
-          borderTopWidth: 0,
+          backgroundColor: '#0A0A0A',
+          borderTopWidth: 1,
+          borderTopColor: '#1A1A1A',
+          height: 60,
+          paddingBottom: 8,
+          paddingTop: 8,
         },
         tabBarActiveTintColor: '#4E4FEB',
-        tabBarInactiveTintColor: '#888888',
+        tabBarInactiveTintColor: '#808080',
         headerShown: false,
       }}
     >

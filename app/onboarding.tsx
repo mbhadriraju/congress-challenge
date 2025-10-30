@@ -67,7 +67,7 @@ export default function Onboarding() {
   }
 
   return (
-    <View className="flex-1 bg-col4">
+    <View className="flex-1 bg-bg">
       <ScrollView
         horizontal
         pagingEnabled
@@ -93,27 +93,27 @@ export default function Onboarding() {
               <Signup goToLogin={goToLogin} />
             ) : (
               <>
-                <Text className="text-white text-4xl font-bold mb-4 text-center">{slide.title}</Text>
-                <Text className="text-col2 text-xl text-center">{slide.subtitle}</Text>
+                <Text className="text-text text-4xl font-bold mb-6 text-center leading-tight">{slide.title}</Text>
+                <Text className="text-textSecondary text-xl text-center leading-7 px-4">{slide.subtitle}</Text>
               </>
             )}
           </View>
         ))}
       </ScrollView>
-      <View className="flex-row justify-between items-center px-6 py-4">
+      <View className="flex-row justify-between items-center px-6 py-6 bg-bg border-t border-surfaceElevated">
         <TouchableOpacity
           onPress={onBack}
           disabled={currentIndex === 0}
-          className={`bg-dg rounded-2xl px-10 py-3 text-lg mb-5 ml-5 ${currentIndex === 0 ? 'opacity-50' : ''}`}
+          className={`bg-surface rounded-2xl px-8 py-3 ${currentIndex === 0 ? 'opacity-40' : ''} border border-surfaceElevated`}
         >
-          <Text className="text-col1 font-bold text-lg">Back</Text>
+          <Text className="text-text font-bold text-lg">Back</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onNext}
           disabled={currentIndex === slides.length - 2}
-          className={`bg-col3 rounded-2xl px-10 py-3 mb-5 mr-5 ${currentIndex > slides.length - 3 ? 'opacity-50' : ''}`}
+          className={`bg-primary rounded-2xl px-8 py-3 ${currentIndex > slides.length - 3 ? 'opacity-50' : ''}`}
         >
-          <Text className="text-col1 font-bold text-lg">
+          <Text className="text-white font-bold text-lg">
             {currentIndex === slides.length - 3 ? 'Get Started' : 'Next'}
           </Text>
         </TouchableOpacity>

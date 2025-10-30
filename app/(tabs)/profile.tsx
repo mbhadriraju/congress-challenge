@@ -1,9 +1,9 @@
 import { Feather } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Link, router } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useAuth } from '../context/AuthProvider'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function Profile() {
@@ -22,7 +22,7 @@ function Profile() {
 
   async function deleteAccount() {
     const token = await AsyncStorage.getItem('token')
-    const backendUrl = 'http://localhost:5000/profile/delete'
+    const backendUrl = 'http://kando.govt.hu:5000/profile/delete'
     const sendResponse = await fetch(backendUrl, {
       method: 'POST',
       headers: {
@@ -68,7 +68,7 @@ function Profile() {
     try {
       const tokenFromStorage = await AsyncStorage.getItem('token')
       const token = user.token || tokenFromStorage || ''
-      const backendUrl = 'http://localhost:5000/profile/change-email'
+      const backendUrl = 'http://kando.govt.hu:5000/profile/change-email'
 
       const sendData = {
         newEmail: email?.toLowerCase(),
@@ -108,26 +108,26 @@ function Profile() {
   }
 
   return (
-    <ScrollView className="flex-1 bg-col4 px-6 pt-16">
-      <Text className="text-3xl text-col1 font-bold mb-8 text-center">Profile</Text>
+    <ScrollView className="flex-1 bg-bg px-6 pt-16">
+      <Text className="text-3xl text-text font-bold mb-8 text-center">Profile</Text>
       
       <View className="space-y-6">
-        <View>
-          <Text className="text-col1 font-semibold text-xl">Email</Text>
+        <View className="bg-surface rounded-2xl p-5 border border-surfaceElevated">
+          <Text className="text-text font-semibold text-lg mb-3">Email</Text>
           <View className="flex-row items-center justify-between">
             <TextInput
               value={email}
               onChangeText={setEmail}
               editable={isEditing}
-              className={`text-blue-200 text-xl flex-1 ml-4 ${
-                isEditing ? 'bg-dg p-2 rounded-lg' : ''
+              className={`text-text text-lg flex-1 ${
+                isEditing ? 'bg-bgSecondary px-3 py-2 rounded-xl' : ''
               }`}
             />
-            <TouchableOpacity onPress={() => changeEmail()} activeOpacity={0.6}>
+            <TouchableOpacity onPress={() => changeEmail()} activeOpacity={0.6} className="ml-3">
               <Feather 
                 name={isEditing ? "check" : "edit-2"} 
-                size={24} 
-                color="#4E4FEB" 
+                size={22} 
+                color={isEditing ? "#10B981" : "#4E4FEB"} 
               />
             </TouchableOpacity>
           </View>
@@ -137,41 +137,42 @@ function Profile() {
               onChangeText={setCurrentPassword}
               secureTextEntry
               placeholder="Current password"
-              placeholderTextColor="#9CA3AF"
-              className="text-blue-200 text-base mt-3 bg-dg p-2 rounded-lg"
+              placeholderTextColor="#808080"
+              className="text-text text-base mt-3 bg-bgSecondary px-3 py-3 rounded-xl"
             />
           )}
-          {error !== '' && ( <Text className="text-red-500 mt-4 font-semibold">{error}</Text> )}
+          {error !== '' && ( <Text className="text-error mt-3 font-semibold text-sm">{error}</Text> )}
         </View>
 
-        <View className="mt-16">
-          <View className="flex-row justify-between space-x-4">
+        <View className="mt-8">
+          <TouchableOpacity
+            className="mx-3 mb-4 bg-surface rounded-2xl p-4 border border-surfaceElevated"
+            activeOpacity={0.6}
+          >
+            <Link className="text-text text-center text-lg font-semibold" href="/change-password">
+              Change Password
+            </Link>
+          </TouchableOpacity>
+          
+          <View className="flex-row justify-between gap-3">
             <TouchableOpacity
               onPress={logOut}
-              className="flex-1 mx-3 bg-[#4E4FEB] rounded-2xl p-4"
-              activeOpacity={0.6}
+              className="flex-1 bg-primary rounded-2xl p-4"
+              activeOpacity={0.8}
             >
               <Text className="text-white text-center text-lg font-semibold">Logout</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={deleteAccount}
-              className="flex-1 mx-3 bg-[#DC2626] rounded-2xl p-4"
-              activeOpacity={0.6}
+              className="flex-1 bg-error rounded-2xl p-4"
+              activeOpacity={0.8}
             >
               <Text className="text-white text-center text-lg font-semibold">
                 Delete Account
               </Text>
             </TouchableOpacity>
           </View>
-            <TouchableOpacity
-              className="flex-1 mx-3 mt-6 bg-dg rounded-2xl p-4"
-              activeOpacity={0.6}
-            >
-              <Link className="text-white text-center text-lg font-semibold" href="/change-password">
-                Change Password
-              </Link>
-            </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
