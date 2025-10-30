@@ -10,6 +10,7 @@ const questRouter = require('../quest/route')
 const loginRouter = require('../login/route')
 const signupRouter = require('../signup/route')
 const changePasswordRouter = require('../change-password/route')
+const assistantRouter = require('../assistant/route')
 
 const port = 5000
 
@@ -25,6 +26,7 @@ app.use('/quest', questRouter)
 app.use('/login', loginRouter)
 app.use('/signup', signupRouter)
 app.use('/change-password', changePasswordRouter)
+app.use('/assistant', assistantRouter)
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${port}`)

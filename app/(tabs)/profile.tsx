@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import { Link, router } from 'expo-router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useAuth } from '../context/AuthProvider'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,7 +10,15 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false)
   const user = useAuth()
   const [email, setEmail] = useState(user.userInfo.email || '')
+  const [currentPassword, setCurrentPassword] = useState('')
   const [error, setError] = useState('')
+
+  // Keep local email in sync with context when not editing
+  useEffect(() => {
+    if (!isEditing && user.userInfo?.email && user.userInfo.email !== email) {
+      setEmail(user.userInfo.email)
+    }
+  }, [user.userInfo?.email, isEditing])
 
   async function deleteAccount() {
     const token = await AsyncStorage.getItem('token')
@@ -41,49 +49,61 @@ function Profile() {
   }
 
   async function changeEmail() {
-    const token = await AsyncStorage.getItem('token')
-    setIsEditing(!isEditing)
+    if (!isEditing) {
+      setIsEditing(true)
+      setError('')
+      return
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       setError("Invalid email format")
       return
     }
-    const backendUrl = 'http://localhost:5000/profile/change-email'
-
-
-
-    const sendData = {
-      oldEmail: user.userInfo.email,
-      newEmail: email?.toLowerCase()
+    if (!currentPassword) {
+      setError("Current password is required")
+      return
     }
-    if (sendData.newEmail !== sendData.oldEmail) {
-      console.log('diff')
+
+    try {
+      const tokenFromStorage = await AsyncStorage.getItem('token')
+      const token = user.token || tokenFromStorage || ''
+      const backendUrl = 'http://localhost:5000/profile/change-email'
+
+      const sendData = {
+        newEmail: email?.toLowerCase(),
+        password: currentPassword
+      }
 
       const sendResponse = await fetch(backendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
         body: JSON.stringify(sendData)
       })
 
-      if (!sendResponse.ok) {
-        console.log('Failed to send data:', sendResponse.statusText)
-      }
       const getData = await sendResponse.json()
-      console.log(getData)
-      if (getData.status === 'error') {
-        setError(getData.message)
+      if (!sendResponse.ok || getData.status === 'error') {
+        setError(getData.message || 'Failed to update email')
+        return
       }
-      else if (getData.status === 'success') {
-        user.setUserInfo({
-          email: email?.toLowerCase(),
-          firstName: user.userInfo.firstName,
-          lastName: user.userInfo.lastName
-        })
-        setError('')
-      }
+
+      // Update context and local state explicitly from server response
+      const updatedEmail = getData?.user?.email || email?.toLowerCase()
+      user.setUserInfo({
+        email: updatedEmail,
+        firstName: user.userInfo.firstName,
+        lastName: user.userInfo.lastName
+      })
+      setEmail(updatedEmail)
+      setCurrentPassword('')
+      setIsEditing(false)
+      setError('')
+    } catch (e) {
+      setError('Network error. Please try again.')
     }
   }
 
@@ -111,6 +131,16 @@ function Profile() {
               />
             </TouchableOpacity>
           </View>
+          {isEditing && (
+            <TextInput
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+              secureTextEntry
+              placeholder="Current password"
+              placeholderTextColor="#9CA3AF"
+              className="text-blue-200 text-base mt-3 bg-dg p-2 rounded-lg"
+            />
+          )}
           {error !== '' && ( <Text className="text-red-500 mt-4 font-semibold">{error}</Text> )}
         </View>
 

@@ -1,73 +1,82 @@
 [
-  {
-    "id": 1,
-    "question": "What is your current employment status?",
-    "options": ["Employed full-time", "Employed part-time", "Unemployed", "Self-employed", "Student", "Retired"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 2,
-    "question": "Do you have any dependents?",
-    "options": ["Yes", "No"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 3,
-    "question": "What is your approximate annual household income?",
-    "options": ["Less than $20,000", "$20,000 - $40,000", "$40,001 - $60,000", "$60,001 - $80,000", "Over $80,000"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 4,
-    "question": "Do you currently have health insurance?",
-    "options": ["Yes", "No", "Only through a government program (e.g., Medicaid, Medicare)"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 5,
-    "question": "What is your age group?",
-    "options": ["Under 18", "18-24", "25-34", "35-44", "45-64", "65+"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 6,
-    "question": "Do you or a household member have a disability?",
-    "options": ["Yes", "No"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 7,
-    "question": "Are you currently receiving any government assistance programs?",
-    "options": ["SNAP (Food Stamps)", "TANF", "Medicaid", "Housing Assistance", "Unemployment Benefits", "None of the above"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 8,
-    "question": "What is your current living situation?",
-    "options": ["Renting", "Own home", "Living with family/friends", "Homeless or in temporary shelter"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 9,
-    "question": "Are you currently pregnant or a parent of a child under 5?",
-    "options": ["Yes", "No"],
-    "type": "multiple-choice"
-  },
-  {
-    "id": 10,
-    "question": "Which state do you reside in?",
-    "options": [
-      "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
-      "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
-      "Illinois", "Indiana", " Iowa", "Kansas", "Kentucky", "Louisiana",
-      "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
-      "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
-      "New Hampshire", "New Jersey", "New Mexico", "New York",
-      "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon",
-      "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
-      "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
-      "West Virginia", "Wisconsin", "Wyoming"
-    ],
-    "type": "dropdown"
-  }
+  { "id": 1, "section": 1, "question": "What is your age?", "options": ["Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"], "type": "multiple-choice" },
+  { "id": 2, "section": 1, "question": "What is your gender?", "options": ["Female", "Male", "Non-binary", "Prefer not to say"], "type": "multiple-choice" },
+  { "id": 3, "section": 1, "question": "What is your marital status?", "options": ["Single", "Married", "Divorced", "Widowed", "Domestic Partnership"], "type": "multiple-choice" },
+  { "id": 4, "section": 1, "question": "What is your current ZIP code?", "options": ["660xx", "661xx", "662xx", "664xx", "665xx", "666xx", "667xx", "668xx", "669xx", "670xx", "671xx", "672xx", "673xx", "674xx", "675xx", "676xx", "677xx", "678xx", "679xx", "Other"], "type": "dropdown" },
+  { "id": 5, "section": 1, "question": "Are you a U.S. citizen, lawful permanent resident, refugee, or asylum seeker?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 6, "section": 1, "question": "Have you lived in Kansas for at least 12 months?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 7, "section": 1, "question": "Do you have a valid Social Security Number?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 8, "section": 1, "question": "Are you currently incarcerated or on probation/parole?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 9, "section": 1, "question": "Do you have a driver’s license or state ID?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 10, "section": 2, "question": "How many people live in your household (including yourself)?", "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"], "type": "dropdown" },
+  { "id": 11, "section": 2, "question": "How many of those household members are children under 18?", "options": ["0", "1", "2", "3", "4", "5+"], "type": "dropdown" },
+  { "id": 12, "section": 2, "question": "How many are under age 5?", "options": ["0", "1", "2", "3", "4+"], "type": "dropdown" },
+  { "id": 13, "section": 2, "question": "How many household members are age 60 or older?", "options": ["0", "1", "2", "3+"], "type": "dropdown" },
+  { "id": 14, "section": 2, "question": "Are you responsible for taking care of any dependents (children, elderly, disabled)?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 15, "section": 2, "question": "Is anyone in your household pregnant?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 16, "section": 2, "question": "Does anyone in your household have a disability or long-term health condition?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 17, "section": 2, "question": "Does anyone in your household serve as a caregiver for someone else with a disability or chronic illness?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 18, "section": 2, "question": "Is anyone in your household currently a student?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 19, "section": 3, "question": "What is your total gross monthly household income (before taxes)?", "options": ["$0 - $499", "$500 - $999", "$1,000 - $1,499", "$1,500 - $1,999", "$2,000 - $2,999", "$3,000 - $3,999", "$4,000 - $4,999", "$5,000+"], "type": "dropdown" },
+  { "id": 20, "section": 3, "question": "What is your total annual household income?", "options": ["<$12,000", "$12,000 - $24,999", "$25,000 - $39,999", "$40,000 - $59,999", "$60,000 - $79,999", "$80,000 - $99,999", "$100,000+"], "type": "dropdown" },
+  { "id": 21, "section": 3, "question": "What are your primary income sources?", "options": ["Job", "Self-employment", "Unemployment benefits", "Retirement income", "SSI/SSDI", "Child support", "Alimony", "Other"], "type": "multiple-choice" },
+  { "id": 22, "section": 3, "question": "Are you currently employed full-time, part-time, or unemployed?", "options": ["Full-time", "Part-time", "Unemployed"], "type": "multiple-choice" },
+  { "id": 23, "section": 3, "question": "If unemployed, how long have you been unemployed?", "options": ["<1 month", "1-3 months", "4-6 months", "7-12 months", ">12 months", "Not applicable"], "type": "dropdown" },
+  { "id": 24, "section": 3, "question": "Are you currently receiving unemployment benefits?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 25, "section": 3, "question": "Do you expect your income to decrease in the next six months?", "options": ["Yes", "No", "Not sure"], "type": "multiple-choice" },
+  { "id": 26, "section": 3, "question": "Do you receive tips or irregular cash income?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 27, "section": 3, "question": "Are you self-employed or do you own a business?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 28, "section": 3, "question": "Do you have savings, investments, or other assets (bank accounts, property, etc.)?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 29, "section": 3, "question": "If yes, approximately how much are your total countable assets?", "options": ["<$250", "$250 - $999", "$1,000 - $2,499", "$2,500 - $4,999", "$5,000 - $9,999", "$10,000 - $24,999", "$25,000+", "Not applicable"], "type": "dropdown" },
+
+  { "id": 30, "section": 4, "question": "What is your current living situation?", "options": ["Own home", "Rent", "Live with family or friends", "Homeless", "Shelter"], "type": "multiple-choice" },
+  { "id": 31, "section": 4, "question": "Do you pay rent or a mortgage?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 32, "section": 4, "question": "If yes, how much do you pay monthly for housing?", "options": ["<$400", "$400 - $699", "$700 - $999", "$1,000 - $1,499", "$1,500 - $1,999", "$2,000+", "Not applicable"], "type": "dropdown" },
+  { "id": 33, "section": 4, "question": "Are you behind on rent or mortgage payments?", "options": ["Yes", "No", "Not applicable"], "type": "multiple-choice" },
+  { "id": 34, "section": 4, "question": "Do you currently receive housing assistance (e.g., Section 8, public housing)?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 35, "section": 4, "question": "Have you received an eviction or foreclosure notice in the past 6 months?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 36, "section": 4, "question": "Do you pay for utilities separately from rent (electricity, water, gas, internet)?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 37, "section": 4, "question": "Do you need help paying energy or utility bills?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 38, "section": 5, "question": "Do you currently have enough money to buy food for your household?", "options": ["Yes", "No", "Sometimes"], "type": "multiple-choice" },
+  { "id": 39, "section": 5, "question": "Have you received SNAP (food stamps) before?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 40, "section": 5, "question": "Do you receive free or reduced-price school meals for any children?", "options": ["Yes", "No", "Not applicable"], "type": "multiple-choice" },
+  { "id": 41, "section": 5, "question": "Are you currently breastfeeding, pregnant, or have a child under age 5?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 42, "section": 6, "question": "Do you currently have health insurance?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 43, "section": 6, "question": "If yes, what type?", "options": ["Employer", "Marketplace", "Medicaid", "Medicare", "VA", "None"], "type": "multiple-choice" },
+  { "id": 44, "section": 6, "question": "Are you currently enrolled in Medicaid or CHIP (KanCare in Kansas)?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 45, "section": 6, "question": "Are you over age 65, or do you have a qualifying disability for Medicare?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 46, "section": 6, "question": "Do you need help paying for prescriptions or medical bills?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 47, "section": 6, "question": "Are you blind or visually impaired?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 48, "section": 6, "question": "Do you have a physical or mental condition that limits your ability to work?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 49, "section": 6, "question": "Have you applied for or received SSI or SSDI before?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 50, "section": 6, "question": "Are you a veteran, or do you have a family member who is?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 51, "section": 7, "question": "What is your highest level of education completed?", "options": ["Less than high school", "High school/GED", "Some college", "Associate degree", "Bachelor’s", "Graduate/Professional"], "type": "dropdown" },
+  { "id": 52, "section": 7, "question": "Are you currently a student (high school, college, or trade school)?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 53, "section": 7, "question": "Are you interested in job training or skill certification programs?", "options": ["Yes", "No", "Maybe"], "type": "multiple-choice" },
+  { "id": 54, "section": 7, "question": "Do you have student loan debt?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 55, "section": 7, "question": "Are you seeking financial aid for college or vocational training?", "options": ["Yes", "No", "Maybe"], "type": "multiple-choice" },
+  { "id": 56, "section": 7, "question": "Do you participate in AmeriCorps, Job Corps, or other federal work-study programs?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 57, "section": 8, "question": "Do you file federal income taxes each year?", "options": ["Yes", "No", "Sometimes"], "type": "multiple-choice" },
+  { "id": 58, "section": 8, "question": "Do you have any dependents under 18 listed on your tax return?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 59, "section": 8, "question": "Did you earn less than $63,398 in the most recent tax year?", "options": ["Yes", "No", "Not sure"], "type": "multiple-choice" },
+  { "id": 60, "section": 8, "question": "Did you receive the Earned Income Tax Credit (EITC) or Child Tax Credit (CTC)?", "options": ["Yes", "No", "Not sure"], "type": "multiple-choice" },
+  { "id": 61, "section": 8, "question": "Do you need assistance filing your taxes?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 62, "section": 9, "question": "Are you a veteran or active-duty military member?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 63, "section": 9, "question": "Are you the surviving spouse or dependent of a veteran?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 64, "section": 9, "question": "Are you Native American or Alaska Native?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 65, "section": 9, "question": "Are you a farmer, rancher, or agricultural worker?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 66, "section": 9, "question": "Do you currently receive Social Security retirement benefits?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 67, "section": 9, "question": "Are you a refugee, asylee, or legally admitted immigrant?", "options": ["Yes", "No"], "type": "multiple-choice" },
+
+  { "id": 68, "section": 10, "question": "Have you experienced a recent disaster (flood, tornado, fire, etc.)?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 69, "section": 10, "question": "Do you need immediate emergency financial assistance?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 70, "section": 10, "question": "Are you currently at risk of homelessness or domestic violence?", "options": ["Yes", "No"], "type": "multiple-choice" },
+  { "id": 71, "section": 6, "question": "Are you currently breastfeeding or postpartum?", "options": ["Yes", "No"], "type": "multiple-choice" }
 ]
