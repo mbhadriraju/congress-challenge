@@ -1,4 +1,4 @@
-# Kando - The Benefits App
+# [Kando - The Benefits App](https://kando.govt.hu/)
 
 Our Congressional App Challenge Submission for the 2025 competition:
 
