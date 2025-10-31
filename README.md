@@ -8,4 +8,4 @@ KanDo allows users to identify what benefits they qualify for using a user-frien
 
 [~ Hosted Link ~](https://kando.govt.hu/)
 
-[~ Video Demo ~](https://youtu.be/Mzqdy-fnJWc)
+[~ Video Demo ~](https://youtu.be/HW8BRHOSnt4)
